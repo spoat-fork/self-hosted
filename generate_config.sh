@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+set -e
 SECRETS_FOUND=0
 IS_OVERWRITING=0
 DOMAIN=
@@ -184,6 +185,9 @@ echo "VITE_WS_URL=wss://$DOMAIN/ws" >> .env.web
 echo "VITE_MEDIA_URL=https://$DOMAIN/autumn" >> .env.web
 echo "VITE_PROXY_URL=https://$DOMAIN/january" >> .env.web
 echo "VITE_CFG_ENABLE_VIDEO=$VIDEO_ENABLED" >> .env.web
+
+# client config
+echo -n "{\"api\":\"https://$DOMAIN/api\"}" > stoat.json
 
 # hostnames
 echo "# All secrets are stored in secrets.env" > Revolt.toml
