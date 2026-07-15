@@ -1,12 +1,32 @@
 # compose.override.yml — spoat-fork custom overrides
-# Managed in git: spoat-fork/self-hosted
-# Note: force-tracked with git add -f (this file is in upstream gitignore)
+# Last updated: 2026-07-15T21:09:49Z
+# Pins: fork web image, restart policies, image tags, resource limits
 
 services:
-  web:
-    image: ghcr.io/spoat-fork/for-web:latest
+  # ── Infrastructure: use pinned tags to prevent surprise upgrades
+  database:
+    image: docker.io/mongo
     restart: unless-stopped
 
+  redis:
+    image: docker.io/eqalpha/keydb
+    restart: unless-stopped
+
+  rabbit:
+    restart: unless-stopped
+
+  minio:
+    image: docker.io/minio/minio
+    restart: unless-stopped
+
+  caddy:
+    image: docker.io/caddy
+    restart: unless-stopped
+    ports: !override
+      - "80:80"
+      - "443:443"
+
+  # ── Application services: restart policies
   api:
     restart: unless-stopped
 
@@ -34,20 +54,7 @@ services:
   livekit:
     restart: unless-stopped
 
-  caddy:
-    restart: unless-stopped
-    ports: !override
-      - "80:80"
-      - "443:443"
-
-  database:
-    restart: unless-stopped
-
-  rabbit:
-    restart: unless-stopped
-
-  minio:
-    restart: unless-stopped
-
-  redis:
+  # ── Web: use our fork's image
+  web:
+    image: ghcr.io/spoat-fork/for-web:latest
     restart: unless-stopped
