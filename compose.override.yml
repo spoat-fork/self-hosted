@@ -1,0 +1,53 @@
+# compose.override.yml — spoat-fork custom overrides
+# Managed in git: spoat-fork/self-hosted
+# Note: force-tracked with git add -f (this file is in upstream gitignore)
+
+services:
+  web:
+    image: ghcr.io/spoat-fork/for-web:latest
+    restart: unless-stopped
+
+  api:
+    restart: unless-stopped
+
+  events:
+    restart: unless-stopped
+
+  autumn:
+    restart: unless-stopped
+
+  january:
+    restart: unless-stopped
+
+  gifbox:
+    restart: unless-stopped
+
+  crond:
+    restart: unless-stopped
+
+  pushd:
+    restart: unless-stopped
+
+  voice-ingress:
+    restart: unless-stopped
+
+  livekit:
+    restart: unless-stopped
+
+  caddy:
+    restart: unless-stopped
+    ports: !override
+      - "80:80"
+      - "443:443"
+
+  database:
+    restart: unless-stopped
+
+  rabbit:
+    restart: unless-stopped
+
+  minio:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
